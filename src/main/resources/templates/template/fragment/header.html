@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>header</title>
+</head>
+<body>
+<header th:fragment="header">
+
+  <div class="navbar navbar-dark bg-dark shadow-sm" style="height: 75px;">
+    <div class="container">
+      <a th:href="@{/}" class="navbar-brand d-flex align-items-center">
+        <strong style="color: cornflowerblue;">TEAMPLE 모여</strong>
+      </a>
+      <a th:href="@{/about}">
+        <stong style="color: white;">ABOUT</stong>
+      </a>
+      <a th:href="@{/project}">
+        <stong style="color: white;">프로젝트</stong>
+      </a>
+      <a th:href="@{/mypage}">
+        <stong style="color: white;">마이페이지</stong>
+      </a>
+      <a th:unless="${session.loginMember}" th:href="@{/login}" >
+        <button type="button" class="btn btn-primary">LOGIN</button>
+      </a>
+
+      <a th:if="${session.loginMember}">
+        <form th:action="@{/logout}" method="post">
+          <button type="submit" class="btn btn-danger">LOGOUT</button>
+        </form>
+      </a>
+    </div>
+  </div>
+</header>
+
+</body>
+</html>

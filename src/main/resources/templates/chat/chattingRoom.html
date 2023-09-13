@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Teample ChatRoom</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/chatRoomStyle.css" />
+</head>
+<body>
+<div class="container" id="app" v-cloak>
+  <!-- 채팅 대화내용 표시 -->
+  <ul class="list-group" ref="listGroup">
+    <li class="list-group-item"
+        v-for="(message, index) in messages"
+        :key="index"
+        :class="{ 'my-row': isMyChat(message), 'other-row': isOtherChat(message), 'flex-container': true }">
+
+      <div class="sender-name">{{message.senderName}}</div>
+
+      <div class="bubble-and-time">
+        <template v-if="isMyChat(message)">
+          <!-- 상대가 읽지 않은 상태면 1로 표시 -->
+          <div class="status-and-time">
+            <div v-if="!message.checked" :class="{ 'highlight': !message.checked }">1</div>
+            <div class="createAt">{{formattedCreatedAt(message, index)}}</div>
+          </div>
+
+          <!-- 삭제 버튼 -->
+          <button v-if="shouldShowDeleteButton(index)"
+                  @click.stop.prevent="deleteMessage()"
+                  type='button'
+                  class='btn btn-danger delete-button'>X
+          </button>
+
+          <div @click.stop.prevent="showDeleteButton(message, index)"
+               :class="{ 'deleted-message': message.type === 'DELETED' }"
+               class="message-bubble">{{message.message}}
+          </div>
+        </template>
+
+        <template v-else>
+          <div @click.stop.prevent="showDeleteButton(message, index)"
+               :class="{ 'deleted-message': message.type === 'DELETED', 'leave-message': message.type === 'LEAVE' }"
+               class="message-bubble">{{message.message}}
+          </div>
+          <div v-if="message.type != 'LEAVE'" class="createAt">{{formattedCreatedAt(message, index)}}</div>
+        </template>
+      </div>
+    </li>
+    <!-- 더이상 보여줄 메시지가 없을때 자동 스크롤 이동을 위한 Sentinel -->
+    <li class="list-group-item" ref="messagesEnd"></li>
+  </ul>
+
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <label class="input-group-text">내용</label>
+    </div>
+
+    <input type="text"
+           class="form-control"
+           v-model="message"
+           v-on:keypress.enter="sendMessage"
+           :placeholder="targetLeft ? '더 이상 메시지를 보낼 수 없습니다.' : ''"
+           :disabled="targetLeft">
+
+      <!-- 채팅 보내기 버튼-->
+      <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
+    </div>
+  </div>
+</div>
+<!-- JavaScript -->
+<script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
+<script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
+<script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="/js/chat/connectWebSocket.js"></script>
+</body>
+</html>

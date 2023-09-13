@@ -1,0 +1,133 @@
+/* Webkit 스크롤 바를 숨기기 */
+::-webkit-scrollbar {
+    display: none;
+}
+
+body, .list-group-item {
+    background: lightsteelblue;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+.list-group {
+    max-height: 740px;
+    overflow-y: auto;
+    width: 100%;
+    padding: 10px;
+    list-style: none;
+}
+
+.list-group-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px 0;
+    border: none;
+}
+
+.input-group {
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.sender-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.bubble-and-time {
+    display: flex;
+    align-items: flex-end;
+}
+
+.my-row .flex-container {
+    align-items: flex-end; /* 오른쪽 정렬 */
+}
+
+.my-row .bubble-and-time {
+    justify-content: flex-end; /* message-bubble이 왼쪽, createAt이 오른쪽 */
+}
+
+.other-row .flex-container {
+    align-items: flex-start; /* 왼쪽 정렬 */
+}
+
+.other-row .bubble-and-time {
+    justify-content: flex-start; /* message-bubble이 왼쪽, createAt이 오른쪽 */
+}
+
+.createAt {
+    font-size: 14px;
+}
+
+.message-bubble {
+    position: relative;
+    padding: 8px 14px;
+    border-radius: 18px;
+    max-width: 60%;
+    font-size: 16px;
+    word-wrap: break-word;
+}
+
+.my-row .sender-name, .my-row {
+    align-self: flex-end;
+}
+
+.my-row .message-bubble {
+    background-color: #73e19b;
+    color: black;
+    align-self: flex-end;
+    border-top-right-radius: 5px;
+}
+
+.other-row .message-bubble {
+    background-color: white;
+    color: black;
+    border-top-left-radius: 5px;
+}
+
+.my-row .createAt {
+    margin-right: 10px;
+}
+
+.other-row .createAt {
+    margin-left: 10px;
+}
+
+.delete-button {
+    margin-right: 10px;
+}
+
+.deleted-message {
+    color: #707070 !important;
+    font-style: italic;
+}
+
+.leave-message {
+    color: #fc425c !important;
+    font-style: italic;
+}
+
+.highlight {
+    font-size: 14px;
+    color: #ffff57;
+    margin-right: 10px;
+    align-self: flex-end;
+}
+
+.status-and-time {
+    display: flex;
+    flex-direction: column;
+}

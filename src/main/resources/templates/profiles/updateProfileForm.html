@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    </head>
+    <style>
+        .bubble {
+	position: relative;
+	background: #c9c9c9;
+	border-radius: .4em;
+    width: 700px;
+    height: 100px;
+}
+
+    .bubble:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: 25px solid transparent;
+        border-bottom-color: #c9c9c9;
+        border-top: 0;
+        margin-left: -25px;
+        margin-top: -25px;
+    }
+
+    .field-error {
+        border-color: #dc3545;
+        color: #dc3545;
+    }
+
+    </style>
+    <body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        <div th:replace="~{template/fragment/header :: header}"> </div>
+
+
+        <main>
+            <br>
+            <div style="text-align: center; font-size: 30px;"><strong>프로필 수정</strong></div>
+            <br><br>
+
+            <div class="col-lg-5" style="margin-left: 25%;">
+
+                <form th:action th:object="${profile}" th:method="put">
+                    <input type="hidden" name="id" th:value="*{id}">
+                    <hr>
+                    <div class="form-floating">
+                        <input class="form-control" type="text" id="tags" th:field="*{tags}">
+                        <label for="tags">태그</label>
+                    </div>
+
+
+                    <div class="form-floating">
+                        <textarea class="form-control" id="introduction" th:field="*{introduction}" th:errorclass="field-error"></textarea>
+                        <label for="introduction">소개 글</label>
+                        <div th:errors="*{introduction}" th:class="field-error">소개 글</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">수정하기</button>
+                    <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/profiles/{profileId}(profileId=${profile.id})}'|">취소하기</button>
+
+                </form>
+            </div>
+            </main>
+    </body>
+</html>
